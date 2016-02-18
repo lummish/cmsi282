@@ -75,7 +75,9 @@ This can be seen as a sum that can be calculated like so:
 		
 	print(summit()) #4096
 5. See poly.py
+
 6. See three_partition.py
+
 7. For method, see c.py 
 		
 	No memoization: 335919
