@@ -1,4 +1,4 @@
-1.
+#1.
 
 	a) f = Θ(g)
 	b) f = O(g)
@@ -18,7 +18,7 @@
 	p) f = O(g)
 	q) f = Θ(g)
 
-2.
+#2.
 
 		print(pow(5, 30000, 31))
 		print(pow(6, 123456, 31))
@@ -27,7 +27,7 @@
 	Take difference of mods, get 0. Yes, the difference is divisible by 31
 
  
-3.
+#3.
 
 	Proposition: b = floor(log_2(n+1))
 
@@ -56,7 +56,7 @@ The second term on the left side of this equation is clearly less than 1 but gre
 Therefore by our inductive hypothesis, the proposition must be true.
 					
 
-4.
+#4.
 The sum of all powers of 2 up to a power n can be expressed:
 	
 	2^n+1 - 1
@@ -74,11 +74,11 @@ This can be seen as a sum that can be calculated like so:
 		return sum
 		
 	print(summit()) #4096
-5. See poly.py
+#5. See poly.py
 
-6. See three_partition.py
+#6. See three_partition.py
 
-7. For method, see c.py 
+#7. For method, see c.py 
 		
 	No memoization: 335919
 	Memoization: 397
