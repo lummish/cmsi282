@@ -1,6 +1,5 @@
 # autokey_cipher.py
-def autokey_vigenere_encrypt(message, keyphrase):
-	
+def autokey_vigenere_gen_key(message, keyphrase):
 	len_diff = len(keyphrase) - len(message)
 	
 	if len_diff > 0:
@@ -10,12 +9,13 @@ def autokey_vigenere_encrypt(message, keyphrase):
 			key = keyphrase + message[:-len_diff]
 		else:
 			key = keyphrase + message[:-len_diff]
+	return key
+
+def autokey_vigenere_encrypt(message, key):
 	
-	
-	# if message and keyphrase are strings
 	message_codepoints = [ord(c) for c in message]
 	key_codepoints = [ord(c) for c in key]
-	
+
 	ciphertext_codepoints = []
 
 	carry = 0
@@ -28,18 +28,22 @@ def autokey_vigenere_encrypt(message, keyphrase):
 		if cipher_charcode > 255:
 			carry = 1
 			cipher_charcode -= 256
-		print(cipher_charcode)
-		cipher_string = chr(cipher_charcode) + cipher_string
+		
+		ciphertext_codepoints = [hex(cipher_charcode)] + ciphertext_codepoints
 
-		ciphertext_codepoints = ['\\' + hex(cipher_charcode)[1:]] + ciphertext_codepoints
-		#ciphertext_codepoints = [hex(cipher_charcode)] + ciphertext_codepoints
-	return cipher_string
+	return ciphertext_codepoints
 	
 	
 
 def autokey_vigenere_decrypt(ciphertext, key):
-	return 0
-	
+	ciphertext_codepoints = [int(c, 16) for c in ciphertext]
+	key_codepoints = [ord(c) for c in key]
 
-print(autokey_vigenere_encrypt("hello", "afg"))
+	return "".join([chr(c_i - k_i) for c_i, k_i in zip(ciphertext_codepoints, key_codepoints)])
+
+
+	
+key = autokey_vigenere_gen_key("hello what is good", "How goes it my d00d?")
+ct = autokey_vigenere_encrypt("hello what is good", key)
+print(autokey_vigenere_decrypt(ct, key))
 	
