@@ -11,8 +11,7 @@ def autokey_vigenere_gen_key(message, keyphrase):
 			key = keyphrase + message[:-len_diff]
 	return key
 
-def autokey_vigenere_encrypt(message, key):
-	
+def autokey_vigenere_encrypt(message, key):	
 	message_codepoints = [ord(c) for c in message]
 	key_codepoints = [ord(c) for c in key]
 
@@ -32,8 +31,6 @@ def autokey_vigenere_encrypt(message, key):
 		ciphertext_codepoints = [hex(cipher_charcode)] + ciphertext_codepoints
 
 	return ciphertext_codepoints
-	
-	
 
 def autokey_vigenere_decrypt(ciphertext, key):
 	ciphertext_codepoints = [int(c, 16) for c in ciphertext]
