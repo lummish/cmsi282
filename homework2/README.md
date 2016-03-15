@@ -277,10 +277,13 @@ b)
 
 a)	The essential idea here is to split the problem into two subproblems each half the size of the original
 		problem and check if they have a majority element. If either subproblem does have a majority element, 
-		if they are the same, then that element is returned. If they are different, then each answer is checked.
-		If one appears more than n/2 times in the original input, then it is output as the majority element. Otherwise,
-		the input has no majority element. 
-b) 
+		if they are the same, then that element is returned. If they are different and one does not have a majority element,
+        then the majority element of the one with a majority element is returned. Otherwise, if both subproblems have a 
+        majority element and they are different, then each answer is checked. If one appears more than n/2 times in the original
+        input, then it is output as the majority element. Otherwise, the input has no majority element. This process is recursed
+        until the majority elements of the original problem's two subarrays can be compared and a final answer can be reached.
+
+b) In lieu of an explanation, here's some code I had: 
 
     public class MajorityElement {
     	
