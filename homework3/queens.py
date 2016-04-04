@@ -12,3 +12,5 @@ def isCorrect(toTest):
 				return False
 			diagonal_distance += 1
 	return True
+
+print(backtracker([], [0,1,2,3,4,5,6,7], 8, isCorrect))

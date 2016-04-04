@@ -1,5 +1,6 @@
 #backtracker.py
 def backtracker(toTest, possibleElements, solutionSize, isCorrect):
+	print(toTest)
 	if not isCorrect(toTest):
 		return
 	elif solutionSize == len(toTest):
@@ -17,4 +18,7 @@ def backtracker(toTest, possibleElements, solutionSize, isCorrect):
 			cur_poss_idx += 1
 			toTest[current_branch_idx] = possibleElements[cur_poss_idx] #set current branch to next element in possibleElements
 			toTest = toTest[:current_branch_idx + 1]
+
+
+
 
