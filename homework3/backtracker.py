@@ -18,6 +18,3 @@ def backtracker(toTest, possibleElements, solutionSize, isCorrect):
 			toTest[current_branch_idx] = possibleElements[cur_poss_idx] #set current branch to next element in possibleElements
 			toTest = toTest[:current_branch_idx + 1]
 
-
-
-
