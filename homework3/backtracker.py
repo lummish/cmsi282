@@ -1,6 +1,5 @@
 #backtracker.py
 def backtracker(toTest, possibleElements, solutionSize, isCorrect):
-	print(toTest)
 	if not isCorrect(toTest):
 		return
 	elif solutionSize == len(toTest):
