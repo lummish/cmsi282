@@ -24,10 +24,12 @@ class Node:
 	def get_weight(self, adj):
 		return self.adjacent[adj]
 
+
 class Graph:
 	def __init__(self):
 		self.node_dict = {}
 		self.num_nodes = 0
+		self.num_edges = 0
 	def __iter__(self):
 		return iter(self.node_dict.values())
 	def add_node(self, node):
@@ -48,6 +50,7 @@ class Graph:
 
 		self.node_dict[frm].add_adjacent(self.node_dict[to], weight)
 		self.node_dict[to].add_adjacent(self.node_dict[frm], weight)
+		self.num_edges += 1 # doesn't check if actual new edge was created
 	def get_nodes(self):
 		return self.node_dict.keys()
 	def random_node(self):
@@ -55,6 +58,8 @@ class Graph:
 		return self.node_dict[name]
 	def node_count(self):
 		return self.num_nodes
+	def edge_count(self):
+		return self.num_edges
 
 
 def prims(g):
@@ -65,8 +70,6 @@ def prims(g):
 	adjacent_nodes = list(start.get_adjacencies())
 	
 	for n in adjacent_nodes:
-		#print ((start.get_weight(n), start.get_name(), n.get_name()))
-		# print((start.get_weight(n), start.get_name(), n.get_name()))
 		q.put((start.get_weight(n), start.get_name(), n.get_name())) #tuple with weight of edge, start, next node
 
 	while t.node_count() < g.node_count():
@@ -91,6 +94,8 @@ def output_set(st):
 	for (frm, to, wt) in st:
 		out_str += '{0},{1},{2}|'.format(frm, to, wt)
 	return out_str[:-1]
+
+
 
 def main(argv):
 	try:
