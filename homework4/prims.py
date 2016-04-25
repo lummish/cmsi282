@@ -1,5 +1,6 @@
 import random
 import Queue as Q
+import sys, getopt
 
 class UnconnectedGraphException(RuntimeError):
 	def __init__(self, arg):
@@ -64,14 +65,16 @@ def prims(g):
 	adjacent_nodes = list(start.get_adjacencies())
 	
 	for n in adjacent_nodes:
-		print ((start.get_weight(n), start.get_name(), n.get_name()))
+		#print ((start.get_weight(n), start.get_name(), n.get_name()))
 		# print((start.get_weight(n), start.get_name(), n.get_name()))
 		q.put((start.get_weight(n), start.get_name(), n.get_name())) #tuple with weight of edge, start, next node
 
 	while t.node_count() < g.node_count():
 		if q.empty():
 			raise UnconnectedGraphException("") 
+		
 		(weight, frm, to) = q.get() #gets next closest node
+		
 		if to not in t.get_nodes():
 			t.add_edge(weight, frm, to)
 			to_node = g.get_node(to)
@@ -83,7 +86,41 @@ def prims(g):
 					q.put((to_node.get_weight(g.get_node(n)), to, n))
 	return t
 
+def output_set(st):
+	out_str = ''
+	for (frm, to, wt) in st:
+		out_str += '{0},{1},{2}|'.format(frm, to, wt)
+	return out_str[:-1]
+
+def main(argv):
+	try:
+		g = Graph()
+		graph_string = str(argv[0])
+		edge_array = graph_string.split('|')
+		
+		for e in edge_array:
+			e_parsed = e.split(',')
+			g.add_edge(e_parsed[2], e_parsed[1], e_parsed[0])
+
+		mst = prims(g)
+		edge_set = set()
+
+		for n in mst:
+			for p in n.get_adjacencies():
+				nid = n.get_name()
+				pid = p.get_name()
+				edge_set.add(tuple(sorted((nid, pid, n.get_weight(p)), reverse=True)))
+		
+		print(output_set(edge_set))
+	except getopt.GetoptError:
+		sys.exit(2)
+
+if __name__ == "__main__":
+	main(sys.argv[1:])
+
+'''
 g = Graph()
+
 
 g.add_node('a')
 g.add_node('b')
@@ -111,4 +148,4 @@ for n in mst:
 		pid = p.get_name()
 		print '( %s, %s, %3d)' % (nid, pid, n.get_weight(p))
 
-
+'''
