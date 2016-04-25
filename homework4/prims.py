@@ -1,6 +1,10 @@
 import random
 import Queue as Q
 
+class UnconnectedGraphException(RuntimeError):
+	def __init__(self, arg):
+		self.args = arg
+
 class Node:
 	def __init__(self, name):
 		self.name = name
@@ -65,6 +69,8 @@ def prims(g):
 		q.put((start.get_weight(n), start.get_name(), n.get_name())) #tuple with weight of edge, start, next node
 
 	while t.node_count() < g.node_count():
+		if q.empty():
+			raise UnconnectedGraphException("") 
 		(weight, frm, to) = q.get() #gets next closest node
 		if to not in t.get_nodes():
 			t.add_edge(weight, frm, to)
@@ -85,6 +91,7 @@ g.add_node('c')
 g.add_node('d')
 g.add_node('e')
 g.add_node('f')
+g.add_node('g')
 
 g.add_edge(5,'a','c')
 g.add_edge(3,'c','d')
