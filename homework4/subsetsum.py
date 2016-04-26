@@ -1,4 +1,6 @@
 def subsetsum(sumset, gsum):
+	if gsum > sum(sumset):
+		return False
 	for s in sumset:
 		if s > gsum:
 			sumset.remove(s) # elements larger than goal not part of solution
