@@ -27,7 +27,9 @@ def enumerate_children(node, node_set, possible_moves):
 
 def is_valid(node, move): # Checks if current pour string leads to valid result
 	if 'E' in move:
-		return True # Always able to empy container
+		return True # Always able to empy container, if already empty, node will just be discarded
+	if 'F' in move:
+		return True # Always able to fill container, if already full, node will just be discarded
 	if move == 'T47':
 		if node[2] > 0 and node[1] < 7:
 			return True
@@ -64,6 +66,12 @@ def pour(node, move):
 		return node[0], 0, node[2]
 	if move == 'E4':
 		return node[0], node[1], 0
+	if move == 'F10':
+		return 10, node[1], node[2]
+	if move == 'F7':
+		return node[0], 7, node[2]
+	if move == 'F4':
+		return node[0], node[1], 4
 	if move == 'T47':
 		move_tup = (2,1)
 	if move == 'T410':
@@ -92,7 +100,7 @@ def pour(node, move):
 	return tuple(node_as_list)
 
 
-possible = ['T47', 'T410', 'T74', 'T710', 'T104', 'T107', 'E7', 'E4', 'E10'] # allowed pours
+possible = ['T47', 'T410', 'T74', 'T710', 'T104', 'T107', 'E7', 'E4', 'E10', 'F7', 'F4', 'F10'] # allowed pours
 pours_made = []
 node_set = set()
 node_set.add((0,7,4))
