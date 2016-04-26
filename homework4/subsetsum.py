@@ -22,6 +22,3 @@ def subsetsum(sumset, gsum):
 	return dp_grid[len(sumset) - 1][gsum]
 
 
-
-
-print(subsetsum([1,3,7,5,4,2], 16))
