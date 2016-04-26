@@ -1,42 +1,33 @@
-import networkx as nx
-g = nx.Graph()
-g.add_node((0,7,4))
-
-
-possible = ['T47', 'T410', 'T74', 'T710', 'T104', 'T107', 'E7', 'E4', 'E10']
-pours_made = []
-node_set = set()
-node_set.add((0,7,4))
-
-def find_pour(cur_node, node_set, pours_made):
-	print('pours_made: ', pours_made)
-	pours_made += [cur_node]
+def find_pour(cur_node, pour, node_set, pours_made):
+	pours_made += [pour]
 	if cur_node[1] == 2 or cur_node[2] == 2:
-		return True
+		pours_made.pop(0)
+		return pours_made
 	else:
 		next_nodes = enumerate_children(cur_node, node_set, possible)
-		#print(next_nodes)
 		if next_nodes == None or len(next_nodes) == 0:
-			pours_made.pop()
+			pours_made.pop() # remove pours that lead to invalid path
 			return False
 		for n in next_nodes:
-			if find_pour(n, node_set, pours_made):
-				return True
+			if find_pour(n[0], n[1], node_set, pours_made):
+				return pours_made
+		pours_made.pop() # remove pours that lead to invalid path
 		return False
 
+# Enumerates possible child nodes of current nodes
 def enumerate_children(node, node_set, possible_moves):
 	children = []
 	for move in possible_moves:
 		if is_valid(node, move):
-			post_pour = pour(node, move)
-			if post_pour not in node_set:
-				children += [post_pour]
+			post_pour = pour(node, move) # status after pour
+			if post_pour not in node_set: # only add to children if node not already in 
+				children += [[post_pour, move]]
 				node_set.add(post_pour)
 	return children
 
-def is_valid(node, move):
+def is_valid(node, move): # Checks if current pour string leads to valid result
 	if 'E' in move:
-		return True
+		return True # Always able to empy container
 	if move == 'T47':
 		if node[2] > 0 and node[1] < 7:
 			return True
@@ -56,7 +47,7 @@ def is_valid(node, move):
 		if node[0] > 0 and node[1] < 7:
 			return True
 
-def remaining_cap(node, to_pitch):
+def remaining_cap(node, to_pitch): #calculates remaining capacity in chosen pitcher
 	if to_pitch == 0:
 		return 10 - node[0]
 	if to_pitch == 1:
@@ -90,16 +81,20 @@ def pour(node, move):
 	to_pitch = move_tup[1]
 
 	remaining = remaining_cap(node_as_list, to_pitch)
-	#print(remaining)
-	if remaining > node_as_list[from_pitch]:
+
+	if remaining > node_as_list[from_pitch]: 
 		node_as_list[to_pitch] += node_as_list[from_pitch]
 		node_as_list[from_pitch] = 0
-	elif node_as_list[from_pitch] >= remaining: #probably can just change to else
+	else: 
 		node_as_list[from_pitch] -= remaining
 		node_as_list[to_pitch] += remaining
-
-
+	
 	return tuple(node_as_list)
 
-print(find_pour((0,7,4), node_set, pours_made))
-#print(pour((4,7,0), 'T710'))
+
+possible = ['T47', 'T410', 'T74', 'T710', 'T104', 'T107', 'E7', 'E4', 'E10'] # allowed pours
+pours_made = []
+node_set = set()
+node_set.add((0,7,4))
+
+print(find_pour((0,7,4), None, node_set, pours_made))

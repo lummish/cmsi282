@@ -11,7 +11,7 @@ public class Changer {
 		Arrays.sort(denoms); //should make it simpler to minimize coin amounts in max_coins
 	}
 
-	public boolean can_make_change_for(int amount) {
+	public boolean can_make_change_for(int amount) { //need to check this method
 		if (amount == 0) {
 			return true;
 		}
@@ -78,7 +78,9 @@ public class Changer {
 
 					if (grid[i - 1][j - denoms[i]] >= 0) {
 						if (grid[i][j - denoms[i]] >= 0) {
-							add_coin = grid[i - 1][j - denoms[i]] < grid[i][j - denoms[i]] ? grid[i - 1][j - denoms[i]] : grid[i][j - denoms[i]]; //minimize number of coins (possible that current row number is min)
+							//minimize number of coins (possible that current row number is min)
+							add_coin = (grid[i - 1][j - denoms[i]] < grid[i][j - denoms[i]] ? 
+									    grid[i - 1][j - denoms[i]] : grid[i][j - denoms[i]]); 
 							add_coin++;
 						}
 						else {
